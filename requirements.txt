@@ -1,0 +1,5 @@
+pyautogui
+mahotas
+Pillow
+opencv-python
+playsound
