@@ -76,25 +76,33 @@ def should_i_align():
 
 
 def should_i_dock():
-    return get_warping_icon() is None and get_gate_to_jump() is None and get_stopped_icon() is None and get_station_to_dock() is not None
+    return get_warping_icon() is None and get_stopped_icon() is not None and get_station_to_dock() is not None
 
 
 if __name__ == '__main__':
     while True:
+        print("alin")
+        print(should_i_align())
         if should_i_align():
             click_to_align()
             print("Align!!!!")
             time.sleep(random.randint(2, 5))
 
+        print("jump")
+        print(should_i_jump())
         if should_i_jump():
             click_to_jump()
             print("Jumping!!!!")
             time.sleep(random.randint(7, 18))
 
+        print("Docking")
+        print(should_i_dock())
         if should_i_dock():
             click_to_dock()
             print("Docking!!!!")
             time.sleep(random.randint(7, 18))
+
+
 
         print("Warping!!!!")
         time.sleep(5)
