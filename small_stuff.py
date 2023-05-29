@@ -42,6 +42,11 @@ def send_drones():
     pyautogui.press("f")
 
 
+def recovery_drones():
+    # pyautogui.press("r")
+    print("should")
+
+
 def get_the_frigate():
     return pyautogui.locateOnScreen(FRIGATE_PATH, confidence=0.8)
 
@@ -74,6 +79,7 @@ if __name__ == '__main__':
         if should_i_play_alarm():
             print("NEUTRO!!!!")
             start_caos()
+            recovery_drones()
 
         if choose_to_shoot():
             print("Nothing to shoot!!!!")

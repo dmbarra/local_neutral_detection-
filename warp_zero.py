@@ -11,6 +11,12 @@ ENABLED_ALIGN_PATH = 'imgs\\enable_align.png'
 ENABLED_JUMP_PATH = 'imgs\\enable_jump.png'
 ENABLED_DOCK_PATH = 'imgs\\enable_station.png'
 
+MSG_JUMP_PATH = 'imgs\\jumping.png'
+MSG_WARP_PATH = 'imgs\\warp.png'
+
+CONTROL_ALIGN = False
+CONTROL_JUMP = False
+
 
 def click_to_jump():
     jump_icon = pyautogui.locateCenterOnScreen(ENABLED_JUMP_PATH, confidence=0.8)
@@ -19,6 +25,7 @@ def click_to_jump():
         print(jump_icon)
         pyautogui.move(jump_icon)
         pyautogui.click(jump_icon, clicks=random.randint(2, 3), interval=random.uniform(0.3, 0.9))
+        return True
 
 
 def click_to_dock():
@@ -37,6 +44,7 @@ def click_to_align():
         print(align_icon)
         pyautogui.move(align_icon)
         pyautogui.click(align_icon, clicks=random.randint(2, 4), interval=random.uniform(0.2, 0.7))
+        return True
 
 
 def generate_random_offset(start):
@@ -59,20 +67,36 @@ def get_warping_icon():
     return pyautogui.locateOnScreen(WARPING_ICON_PATH, confidence=0.99, grayscale=False)
 
 
-def get_enabled_align():
-    return pyautogui.locateOnScreen(ENABLED_ALIGN_PATH, confidence=0.99)
+def get_msg_warp():
+    return pyautogui.locateOnScreen(MSG_WARP_PATH, confidence=0.99)
+
+
+def get_msg_jump():
+    return pyautogui.locateOnScreen(MSG_JUMP_PATH, confidence=0.99)
 
 
 def get_stopped_icon():
     return pyautogui.locateOnScreen(STOPPED_ICON_PATH, confidence=0.99)
 
 
-def should_i_jump():
-    return get_warping_icon() is None and get_gate_to_jump() is not None and get_stopped_icon() is None and get_station_to_dock() is None
+def should_i_jump(control):
+    return get_warping_icon() is None and \
+        get_gate_to_jump() is not None and \
+        get_stopped_icon() is None and \
+        get_station_to_dock() is None and \
+        get_msg_jump() is None and \
+        get_msg_warp() is None and \
+        control
 
 
-def should_i_align():
-    return get_warping_icon() is None and get_gate_to_jump() is not None and get_stopped_icon() is not None and get_station_to_dock() is None
+def should_i_align(control):
+    return get_warping_icon() is None and \
+        get_gate_to_jump() is not None and \
+        get_stopped_icon() is not None and \
+        get_station_to_dock() is None and \
+        get_msg_jump() is None and \
+        get_msg_warp() is None and \
+        control
 
 
 def should_i_dock():
@@ -80,29 +104,26 @@ def should_i_dock():
 
 
 if __name__ == '__main__':
+    CONTROL_ALIGN = True
     while True:
-        print("alin")
-        print(should_i_align())
-        if should_i_align():
-            click_to_align()
+        if should_i_align(CONTROL_ALIGN):
+            CONTROL_JUMP = click_to_align()
             print("Align!!!!")
             time.sleep(random.randint(2, 5))
 
-        print("jump")
-        print(should_i_jump())
-        if should_i_jump():
-            click_to_jump()
+        if should_i_jump(CONTROL_JUMP):
+            CONTROL_ALIGN = click_to_jump()
             print("Jumping!!!!")
             time.sleep(random.randint(7, 18))
+        else:
+            print("CANNOT Jumping!!!!")
 
-        print("Docking")
-        print(should_i_dock())
         if should_i_dock():
             click_to_dock()
             print("Docking!!!!")
             time.sleep(random.randint(7, 18))
+        else:
+            print("CANNOT Warp!!!!")
 
-
-
-        print("Warping!!!!")
+        print("Waiting!!!!")
         time.sleep(5)
