@@ -69,6 +69,7 @@ def choose_to_shoot():
 
 if __name__ == '__main__':
     threat = False
+    temp = 0
     while True:
         if should_i_play_closer_threat():
             if not threat:
@@ -99,5 +100,5 @@ if __name__ == '__main__':
         time.sleep(1)
 
         print("waiting!!!!")
-        start_bloop(count)
-        count += 1
+        start_bloop(temp)
+        temp += 1
