@@ -18,11 +18,11 @@ def should_i_play_closer_threat():
 
 
 def get_the_neutral():
-    return pyautogui.locateOnScreen(NEUTRAL_PATH, confidence=0.8)
+    return pyautogui.locateOnScreen(NEUTRAL_PATH, confidence=0.9)
 
 
 def get_the_orange():
-    return pyautogui.locateOnScreen(ORANGE_PATH, confidence=0.8)
+    return pyautogui.locateOnScreen(ORANGE_PATH, confidence=0.9)
 
 
 def get_closer_local():
@@ -43,6 +43,13 @@ def play_threat():
     return p
 
 
+def play_bloop():
+    audio_file = os.path.dirname(__file__) + '\\sound\\bloop.mp3'
+    p = multiprocessing.Process(target=playsound, args=(audio_file,))
+    p.start()
+    return p
+
+
 def stop_playing(play):
     play.terminate()
 
@@ -57,7 +64,16 @@ def start_threat():
     return play_threat(), True
 
 
+def start_bloop(number):
+    if number % 30 == 0:
+        print("BLOOP")
+        play = play_bloop()
+        time.sleep(1)
+        stop_playing(play)
+
+
 if __name__ == '__main__':
+    count = 0
     threat = False
     while True:
         if should_i_play_closer_threat():
@@ -72,3 +88,5 @@ if __name__ == '__main__':
         time.sleep(1)
 
         print("waiting!!!!")
+        start_bloop(count)
+        count += 1

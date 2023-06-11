@@ -2,7 +2,7 @@ import time
 import pyautogui
 import random
 
-from local import should_i_play_closer_threat, start_threat, stop_playing, should_i_play_alarm, start_caos
+from local import should_i_play_closer_threat, start_threat, stop_playing, should_i_play_alarm, start_caos, start_bloop
 from warp_zero import generate_random_offset
 
 FRIGATE_PATH = 'imgs\\frigate.png'
@@ -99,3 +99,5 @@ if __name__ == '__main__':
         time.sleep(1)
 
         print("waiting!!!!")
+        start_bloop(count)
+        count += 1
