@@ -8,11 +8,12 @@ from app import print_message
 
 NEUTRAL_PATH = 'imgs\\neutral.png'
 ORANGE_PATH = 'imgs\\orange.png'
+RED_PATH = 'imgs\\red.png'
 LOCAL_NEXT = 'imgs\\5BTK-M.png'
 
 
 def should_i_play_alarm():
-    return get_the_neutral() is not None or get_the_orange() is not None
+    return get_the_neutral() is not None or get_the_orange() is not None or get_the_red() is not None
 
 
 def should_i_play_closer_threat():
@@ -25,6 +26,10 @@ def get_the_neutral():
 
 def get_the_orange():
     return pyautogui.locateOnScreen(ORANGE_PATH, confidence=0.9)
+
+
+def get_the_red():
+    return pyautogui.locateOnScreen(RED_PATH, confidence=0.9)
 
 
 def get_closer_local():
