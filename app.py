@@ -1,12 +1,12 @@
 import multiprocessing
-from datetime import datetime
-from queue import Empty, Full
-import time
-from tkinter import Tk, Button, Frame, LEFT, Text, BOTH, TOP, BOTTOM, Scrollbar, DISABLED, NORMAL
+from queue import Empty
+from tkinter import Tk, Button, Frame, LEFT, Text, BOTH, TOP, BOTTOM, DISABLED, NORMAL
 
 
 class GuiApp(object):
     def __init__(self, q):
+        self.multiprocess = None
+        self.pressed = False
         self.window = Tk()
         self.window.geometry("250x200")
         self.window.title("Waiting!!")
@@ -20,24 +20,16 @@ class GuiApp(object):
         self.button3 = Button(self.button_frame, text="warp", command=self.run_warp_script)
         self.button3.pack(side=LEFT, padx=2)
 
-        self.pressed = False
-        from local import loop_running_local
-        self.run_local = multiprocessing.Process(target=loop_running_local, args=(q,))
-        from small_stuff import loop_running_small_stuff
-        self.run_small = multiprocessing.Process(target=loop_running_small_stuff, args=(q,))
-        from warp_zero import loop_running_warp
-        self.run_warp = multiprocessing.Process(target=loop_running_warp, args=(q,))
-
         self.text_frame = Frame(self.window, width=250, height=160)
         self.text_frame.pack(side=TOP, pady=2)
         self.text_wid = Text(self.text_frame, height=50, width=50)
         self.text_wid.pack(expand=0, fill=BOTH)
 
-        self.scroll = Scrollbar(self.window, orient="vertical", command=self.text_wid.yview)
-        self.text_wid.configure(yscrollcommand=self.scroll.set)
-        self.scroll.pack(side="right", fill="y")
-
         self.window.after(100, self.check_queue_poll, q)
+
+    def run_process(self, target, args):
+        self.multiprocess = multiprocessing.Process(target=target, args=args)
+        self.multiprocess.start()
 
     def check_queue_poll(self, c_queue):
         try:
@@ -51,7 +43,8 @@ class GuiApp(object):
 
     def run_local_script(self):
         if not self.pressed:
-            self.run_local.start()
+            from local import loop_running_local
+            self.run_process(target=loop_running_local, args=(q,))
             self.window.title("Running Local Script")
             self.button1.config(text="STOP")
             self.pressed = True
@@ -59,7 +52,7 @@ class GuiApp(object):
             self.button3.config(state=DISABLED)
         else:
             self.button1.config(text="Local")
-            self.run_local.terminate()
+            self.multiprocess.terminate()
             self.pressed = False
             self.button2.config(state=NORMAL)
             self.button3.config(state=NORMAL)
@@ -67,7 +60,8 @@ class GuiApp(object):
 
     def run_small_script(self):
         if not self.pressed:
-            self.run_small.start()
+            from small_stuff import loop_running_small_stuff
+            self.run_process(target=loop_running_small_stuff, args=(q,))
             self.window.title("Running Small Script")
             self.button2.config(text="STOP")
             self.pressed = True
@@ -75,7 +69,7 @@ class GuiApp(object):
             self.button3.config(state=DISABLED)
         else:
             self.button2.config(text="small")
-            self.run_small.terminate()
+            self.multiprocess.terminate()
             self.pressed = False
             self.button1.config(state=NORMAL)
             self.button3.config(state=NORMAL)
@@ -83,7 +77,8 @@ class GuiApp(object):
 
     def run_warp_script(self):
         if not self.pressed:
-            self.run_warp.start()
+            from warp_zero import loop_running_warp
+            self.run_process(target=loop_running_warp, args=(q,))
             self.button3.config(text="STOP")
             self.window.title("Running Warp Script")
             self.pressed = True
@@ -91,7 +86,7 @@ class GuiApp(object):
             self.button2.config(state=DISABLED)
         else:
             self.button3.config(text="warp")
-            self.run_warp.terminate()
+            self.multiprocess.terminate()
             self.pressed = False
             self.button1.config(state=NORMAL)
             self.button2.config(state=NORMAL)
