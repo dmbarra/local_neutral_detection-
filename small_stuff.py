@@ -2,6 +2,7 @@ import time
 import pyautogui
 import random
 
+from app import print_message
 from local import should_i_play_closer_threat, start_threat, stop_playing, should_i_play_alarm, start_caos, start_bloop
 from warp_zero import generate_random_offset
 
@@ -24,7 +25,6 @@ def select_to_shoot():
     ship_icon = select_frig_or_cruise()
     if ship_icon is not None:
         ship_icon = generate_random_offset(ship_icon)
-        print(ship_icon)
         pyautogui.move(ship_icon)
         pyautogui.click(ship_icon, clicks=random.randint(2, 2), interval=random.uniform(0.2, 0.7))
 
@@ -33,7 +33,6 @@ def lock_target():
     ship_icon = pyautogui.locateCenterOnScreen(LOCK_ICON, confidence=0.9)
     if ship_icon is not None:
         ship_icon = generate_random_offset(ship_icon)
-        print(ship_icon)
         pyautogui.move(ship_icon)
         pyautogui.click(ship_icon, clicks=random.randint(2, 3), interval=random.uniform(0.2, 0.7))
 
@@ -67,7 +66,7 @@ def choose_to_shoot():
     return get_the_frigate() is not None or get_the_cruiser() is not None
 
 
-if __name__ == '__main__':
+def loop_running_small_stuff(q=None):
     threat = False
     temp = 0
     while True:
@@ -78,27 +77,27 @@ if __name__ == '__main__':
                 stop_playing(played)
                 threat = False
         if should_i_play_alarm():
-            print("NEUTRO!!!!")
+            print_message("NEUTRO!!!!", q)
             start_caos()
             recovery_drones()
-
         if choose_to_shoot():
-            print("Nothing to shoot!!!!")
+            print_message("Nothing to shoot!!!!", q)
             if get_none_selected() is not None:
-                print("Locking!!!!")
+                print_message("Locking!!!!", q)
                 count = 0
                 select_to_shoot()
                 lock_target()
                 while get_unlock_icon() is None and count <= 8:
-                    print("Waiting for lock!!!!")
-                    print(count)
+                    print_message("Waiting for lock!!!!", q)
                     time.sleep(1)
                     count += 1
                 if get_unlock_icon() is not None:
                     send_drones()
-
         time.sleep(1)
-
-        print("waiting!!!!")
-        start_bloop(temp)
+        print_message("waiting!!!!", q)
+        start_bloop(temp, q)
         temp += 1
+
+
+if __name__ == '__main__':
+    loop_running_small_stuff()

@@ -4,6 +4,8 @@ import pyautogui
 from playsound import playsound
 import multiprocessing
 
+from app import print_message
+
 NEUTRAL_PATH = 'imgs\\neutral.png'
 ORANGE_PATH = 'imgs\\orange.png'
 LOCAL_NEXT = 'imgs\\5BTK-M.png'
@@ -64,15 +66,15 @@ def start_threat():
     return play_threat(), True
 
 
-def start_bloop(number):
+def start_bloop(number, q):
     if number % 30 == 0:
-        print("BLOOP")
+        print_message("BLOOP", q)
         play = play_bloop()
         time.sleep(1)
         stop_playing(play)
 
 
-if __name__ == '__main__':
+def loop_running_local(q=None):
     count = 0
     threat = False
     while True:
@@ -83,10 +85,14 @@ if __name__ == '__main__':
                 stop_playing(played)
                 threat = False
         if should_i_play_alarm():
-            print("NEUTRO!!!!")
+            print_message("NEUTRO!!!!", q)
             start_caos()
         time.sleep(1)
 
-        print("waiting!!!!")
-        start_bloop(count)
+        print_message("waiting!!!!", q)
+        start_bloop(count, q)
         count += 1
+
+
+if __name__ == '__main__':
+    loop_running_local()
