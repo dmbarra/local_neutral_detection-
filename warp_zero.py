@@ -96,6 +96,10 @@ def should_i_dock():
     return get_warping_icon() is None and get_stopped_icon() is not None and get_station_to_dock() is not None
 
 
+def wtf_happens(control_align, control_jump):
+    return not control_align and not control_jump
+
+
 def loop_running_warp(q=None):
     control_align: bool = True
     control_jump: bool = False
@@ -110,6 +114,14 @@ def loop_running_warp(q=None):
 
         print_message("Jumping control: " + str(should_i_jump(control_jump)), q)
         if should_i_jump(control_jump):
+            click_to_jump()
+            control_jump = False
+            control_align = True
+            print_message("Jumping!!!!", q)
+            time.sleep(random.randint(7, 18))
+
+        if wtf_happens(control_align, control_jump):
+            print_message("Get STUCK", q)
             click_to_jump()
             control_jump = False
             control_align = True

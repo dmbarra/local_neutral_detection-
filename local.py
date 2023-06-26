@@ -94,7 +94,7 @@ def loop_running_local(q=None):
             start_caos()
         time.sleep(1)
 
-        print_message("waiting!!!!", q)
+        print_message("Checking Local!!!!", q)
         start_bloop(count, q)
         count += 1
 

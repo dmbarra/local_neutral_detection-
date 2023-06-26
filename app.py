@@ -3,6 +3,7 @@ from queue import Empty
 from tkinter import Tk, Button, Frame, LEFT, Text, BOTH, TOP, BOTTOM, DISABLED, NORMAL
 
 
+
 class GuiApp(object):
     def __init__(self, q):
         self.multiprocess = None
@@ -28,8 +29,13 @@ class GuiApp(object):
         self.window.after(100, self.check_queue_poll, q)
 
     def run_process(self, target, args):
-        self.multiprocess = multiprocessing.Process(target=target, args=args)
-        self.multiprocess.start()
+        p = multiprocessing.Process(target=target, args=args)
+        p.start()
+
+    def kill_all_process(self):
+        for p in multiprocessing.active_children():
+            p.terminate()
+        # self.multiprocess.terminate()
 
     def check_queue_poll(self, c_queue):
         try:
@@ -52,7 +58,7 @@ class GuiApp(object):
             self.button3.config(state=DISABLED)
         else:
             self.button1.config(text="Local")
-            self.multiprocess.terminate()
+            self.kill_all_process()
             self.pressed = False
             self.button2.config(state=NORMAL)
             self.button3.config(state=NORMAL)
@@ -60,6 +66,8 @@ class GuiApp(object):
 
     def run_small_script(self):
         if not self.pressed:
+            from local import loop_running_local
+            self.run_process(target=loop_running_local, args=(q,))
             from small_stuff import loop_running_small_stuff
             self.run_process(target=loop_running_small_stuff, args=(q,))
             self.window.title("Running Small Script")
@@ -69,7 +77,7 @@ class GuiApp(object):
             self.button3.config(state=DISABLED)
         else:
             self.button2.config(text="small")
-            self.multiprocess.terminate()
+            self.kill_all_process()
             self.pressed = False
             self.button1.config(state=NORMAL)
             self.button3.config(state=NORMAL)

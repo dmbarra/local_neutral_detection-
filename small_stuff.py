@@ -1,3 +1,4 @@
+import multiprocessing
 import time
 import pyautogui
 import random
@@ -67,19 +68,8 @@ def choose_to_shoot():
 
 
 def loop_running_small_stuff(q=None):
-    threat = False
     temp = 0
     while True:
-        if should_i_play_closer_threat():
-            if not threat:
-                played, threat = start_threat()
-            else:
-                stop_playing(played)
-                threat = False
-        if should_i_play_alarm():
-            print_message("NEUTRO!!!!", q)
-            start_caos()
-            recovery_drones()
         if choose_to_shoot():
             print_message("Nothing to shoot!!!!", q)
             if get_none_selected() is not None:
@@ -93,11 +83,14 @@ def loop_running_small_stuff(q=None):
                     count += 1
                 if get_unlock_icon() is not None:
                     send_drones()
-        time.sleep(1)
-        print_message("waiting!!!!", q)
-        start_bloop(temp, q)
+        time.sleep(2)
+        print_message("Try Again!!!!", q)
         temp += 1
 
 
 if __name__ == '__main__':
+    from local import loop_running_local
+    process = multiprocessing.Process(target=loop_running_local)
+    process.start()
     loop_running_small_stuff()
+
