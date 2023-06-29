@@ -3,7 +3,6 @@ from queue import Empty
 from tkinter import Tk, Button, Frame, LEFT, Text, BOTH, TOP, BOTTOM, DISABLED, NORMAL
 
 
-
 class GuiApp(object):
     def __init__(self, q):
         self.multiprocess = None
@@ -20,6 +19,8 @@ class GuiApp(object):
         self.button2.pack(side=LEFT, padx=2)
         self.button3 = Button(self.button_frame, text="warp", command=self.run_warp_script)
         self.button3.pack(side=LEFT, padx=2)
+        self.button4 = Button(self.button_frame, text="carrier", command=self.run_carrier)
+        self.button4.pack(side=LEFT, padx=2)
 
         self.text_frame = Frame(self.window, width=250, height=160)
         self.text_frame.pack(side=TOP, pady=2)
@@ -56,12 +57,14 @@ class GuiApp(object):
             self.pressed = True
             self.button2.config(state=DISABLED)
             self.button3.config(state=DISABLED)
+            self.button4.config(state=DISABLED)
         else:
             self.button1.config(text="Local")
             self.kill_all_process()
             self.pressed = False
             self.button2.config(state=NORMAL)
             self.button3.config(state=NORMAL)
+            self.button4.config(state=NORMAL)
             self.window.title("Wait!!")
 
     def run_small_script(self):
@@ -75,12 +78,14 @@ class GuiApp(object):
             self.pressed = True
             self.button1.config(state=DISABLED)
             self.button3.config(state=DISABLED)
+            self.button4.config(state=DISABLED)
         else:
             self.button2.config(text="small")
             self.kill_all_process()
             self.pressed = False
             self.button1.config(state=NORMAL)
             self.button3.config(state=NORMAL)
+            self.button4.config(state=NORMAL)
             self.window.title("Wait!!")
 
     def run_warp_script(self):
@@ -92,12 +97,37 @@ class GuiApp(object):
             self.pressed = True
             self.button1.config(state=DISABLED)
             self.button2.config(state=DISABLED)
+            self.button4.config(state=DISABLED)
         else:
             self.button3.config(text="warp")
             self.multiprocess.terminate()
             self.pressed = False
             self.button1.config(state=NORMAL)
             self.button2.config(state=NORMAL)
+            self.button4.config(state=NORMAL)
+            self.window.title("Wait!!")
+
+    def run_carrier(self):
+        if not self.pressed:
+            from local import loop_running_local
+            self.run_process(target=loop_running_local, args=(q,))
+            from bigger_more import loop_running_by_carrier
+            self.run_process(target=loop_running_by_carrier, args=(q,))
+            from bigger_more import protect_carrier
+            self.run_process(target=protect_carrier, args=(q,))
+            self.window.title("Running Carrier")
+            self.button4.config(text="STOP")
+            self.pressed = True
+            self.button1.config(state=DISABLED)
+            self.button2.config(state=DISABLED)
+            self.button3.config(state=DISABLED)
+        else:
+            self.button4.config(text="carrier")
+            self.kill_all_process()
+            self.pressed = False
+            self.button1.config(state=NORMAL)
+            self.button2.config(state=NORMAL)
+            self.button3.config(state=NORMAL)
             self.window.title("Wait!!")
 
 
