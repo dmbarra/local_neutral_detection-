@@ -97,7 +97,7 @@ def should_i_dock():
 
 
 def wtf_happens(control_align, control_jump):
-    return not control_align and not control_jump
+    return not control_align and control_jump
 
 
 def loop_running_warp(q=None):
