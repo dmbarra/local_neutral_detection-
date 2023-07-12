@@ -100,7 +100,7 @@ class GuiApp(object):
             self.button4.config(state=DISABLED)
         else:
             self.button3.config(text="warp")
-            self.multiprocess.terminate()
+            self.kill_all_process()
             self.pressed = False
             self.button1.config(state=NORMAL)
             self.button2.config(state=NORMAL)
