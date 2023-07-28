@@ -97,7 +97,10 @@ def should_i_dock():
 
 
 def wtf_happens(control_align, control_jump):
-    return not control_align and control_jump
+    count = 1
+    while not should_i_align(control_align) and should_i_jump(control_jump) and count <= 3:
+        time.sleep(1)
+    return True
 
 
 def loop_running_warp(q=None):
@@ -110,7 +113,7 @@ def loop_running_warp(q=None):
             control_jump = True
             control_align = False
             print_message("Align!!!!", q)
-            time.sleep(random.randint(2, 5))
+            time.sleep(random.randint(1, 4))
 
         print_message("Jumping control: " + str(should_i_jump(control_jump)), q)
         if should_i_jump(control_jump):
@@ -121,12 +124,12 @@ def loop_running_warp(q=None):
             time.sleep(random.randint(7, 18))
 
         if wtf_happens(control_align, control_jump):
-            print_message("Get STUCK", q)
-            click_to_jump()
-            control_jump = False
-            control_align = True
-            print_message("Jumping!!!!", q)
-            time.sleep(random.randint(7, 18))
+            if get_stopped_icon() is not None and get_msg_warp() is None:
+                click_to_jump()
+                control_jump = False
+                control_align = True
+                print_message("Jumping STUCK", q)
+                time.sleep(random.randint(7, 18))
 
         if should_i_dock():
             click_to_dock()
