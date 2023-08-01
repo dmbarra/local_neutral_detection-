@@ -92,6 +92,8 @@ class GuiApp(object):
         if not self.pressed:
             from warp_zero import loop_running_warp
             self.run_process(target=loop_running_warp, args=(q,))
+            from warp_zero import loop_stucked
+            self.run_process(target=loop_stucked, args=(q,))
             self.button3.config(text="STOP")
             self.window.title("Running Warp Script")
             self.pressed = True

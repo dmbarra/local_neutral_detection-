@@ -1,3 +1,4 @@
+import multiprocessing
 import time
 import pyautogui
 import random
@@ -13,8 +14,11 @@ ENABLED_ALIGN_PATH = 'imgs\\enable_align2.png'
 ENABLED_JUMP_PATH = 'imgs\\enable_jump.png'
 ENABLED_DOCK_PATH = 'imgs\\enable_station.png'
 
+MSG_ALIGN_PATH = 'imgs\\aligning.png'
 MSG_JUMP_PATH = 'imgs\\jumping.png'
 MSG_WARP_PATH = 'imgs\\warp.png'
+
+NO_OBJECT_SELECTED = 'imgs\\no_object_select.png'
 
 
 def click_to_jump():
@@ -68,8 +72,16 @@ def get_msg_jump():
     return pyautogui.locateOnScreen(MSG_JUMP_PATH, confidence=0.99)
 
 
+def get_msg_align():
+    return pyautogui.locateOnScreen(MSG_ALIGN_PATH, confidence=0.99)
+
+
 def get_stopped_icon():
     return pyautogui.locateOnScreen(STOPPED_ICON_PATH, confidence=0.99)
+
+
+def get_no_object_selected():
+    return pyautogui.locateOnScreen(NO_OBJECT_SELECTED, confidence=0.99)
 
 
 def should_i_jump(control):
@@ -79,7 +91,8 @@ def should_i_jump(control):
         get_station_to_dock() is None and \
         get_msg_jump() is None and \
         get_msg_warp() is None and \
-        control
+        control and \
+        get_no_object_selected() is None
 
 
 def should_i_align(control):
@@ -89,25 +102,39 @@ def should_i_align(control):
         get_station_to_dock() is None and \
         get_msg_jump() is None and \
         get_msg_warp() is None and \
-        control
+        control and \
+        get_no_object_selected() is None
 
 
 def should_i_dock():
     return get_warping_icon() is None and get_stopped_icon() is not None and get_station_to_dock() is not None
 
 
-def wtf_happens(control_align, control_jump):
-    count = 1
-    while not should_i_align(control_align) and should_i_jump(control_jump) and count <= 3:
+def loop_stucked(q=None):
+    count: int = 0
+    while True:
+        print_message("Checking Stucked", q)
+        if (get_stopped_icon() is not None and get_msg_warp() is None) \
+                or get_msg_align() is not None:
+            print_message("Count Stucked", q)
+            count += 1
+            time.sleep(2)
+        else:
+            count = 0
+
+        if count >= 7:
+            click_to_jump()
+            print_message("Jumping STUCK", q)
+            time.sleep(random.randint(3, 10))
+            count = 0
         time.sleep(1)
-    return True
 
 
 def loop_running_warp(q=None):
     control_align: bool = True
     control_jump: bool = False
     while True:
-        print_message("Align control: " + str(should_i_align(control_align)), q)
+        print_message("Should I align?: " + str(should_i_align(control_align)), q)
         if should_i_align(control_align):
             click_to_align()
             control_jump = True
@@ -115,7 +142,7 @@ def loop_running_warp(q=None):
             print_message("Align!!!!", q)
             time.sleep(random.randint(1, 4))
 
-        print_message("Jumping control: " + str(should_i_jump(control_jump)), q)
+        print_message("Should I jump?: " + str(should_i_jump(control_jump)), q)
         if should_i_jump(control_jump):
             click_to_jump()
             control_jump = False
@@ -123,17 +150,11 @@ def loop_running_warp(q=None):
             print_message("Jumping!!!!", q)
             time.sleep(random.randint(7, 18))
 
-        if wtf_happens(control_align, control_jump):
-            if get_stopped_icon() is not None and get_msg_warp() is None:
-                click_to_jump()
-                control_jump = False
-                control_align = True
-                print_message("Jumping STUCK", q)
-                time.sleep(random.randint(7, 18))
-
         if should_i_dock():
             click_to_dock()
             print_message("Docking!!!!", q)
+            control_jump = False
+            control_align = True
             time.sleep(random.randint(7, 18))
 
         print_message("Waiting!!!!", q)
@@ -141,4 +162,6 @@ def loop_running_warp(q=None):
 
 
 if __name__ == '__main__':
+    process = multiprocessing.Process(target=loop_stucked)
+    process.start()
     loop_running_warp()
