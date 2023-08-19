@@ -9,7 +9,7 @@ from app import print_message
 NEUTRAL_PATH = 'imgs\\neutral.png'
 ORANGE_PATH = 'imgs\\orange.png'
 RED_PATH = 'imgs\\red.png'
-LOCAL_NEXT = 'imgs\\5BTK-M.png'
+LOCAL_NEXT = 'imgs\\Q-02UL.png'
 
 
 def should_i_play_alarm():
