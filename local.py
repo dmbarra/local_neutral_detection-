@@ -33,7 +33,7 @@ def get_the_red():
 
 
 def get_closer_local():
-    return pyautogui.locateOnScreen(LOCAL_NEXT, confidence=0.8)
+    return pyautogui.locateOnScreen(LOCAL_NEXT, confidence=0.9)
 
 
 def play_alarm():

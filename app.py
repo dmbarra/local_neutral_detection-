@@ -10,6 +10,7 @@ class GuiApp(object):
         self.window = Tk()
         self.window.geometry("250x200")
         self.window.title("Waiting!!")
+        self.window.configure(bg='red')
 
         self.button_frame = Frame(self.window, width=250, height=160)
         self.button_frame.pack(side=BOTTOM, pady=2)
@@ -21,6 +22,8 @@ class GuiApp(object):
         self.button3.pack(side=LEFT, padx=2)
         self.button4 = Button(self.button_frame, text="carrier", command=self.run_carrier)
         self.button4.pack(side=LEFT, padx=2)
+        self.button5 = Button(self.button_frame, text="warp cloak", command=self.run_warp_cloak)
+        self.button5.pack(side=LEFT, padx=2)
 
         self.text_frame = Frame(self.window, width=250, height=160)
         self.text_frame.pack(side=TOP, pady=2)
@@ -53,11 +56,13 @@ class GuiApp(object):
             from local import loop_running_local
             self.run_process(target=loop_running_local, args=(q,))
             self.window.title("Running Local Script")
+            self.window.configure(bg='green')
             self.button1.config(text="STOP")
             self.pressed = True
             self.button2.config(state=DISABLED)
             self.button3.config(state=DISABLED)
             self.button4.config(state=DISABLED)
+            self.button5.config(state=DISABLED)
         else:
             self.button1.config(text="Local")
             self.kill_all_process()
@@ -65,7 +70,9 @@ class GuiApp(object):
             self.button2.config(state=NORMAL)
             self.button3.config(state=NORMAL)
             self.button4.config(state=NORMAL)
+            self.button5.config(state=NORMAL)
             self.window.title("Wait!!")
+            self.window.configure(bg='red')
 
     def run_small_script(self):
         if not self.pressed:
@@ -74,11 +81,13 @@ class GuiApp(object):
             from small_stuff import loop_running_small_stuff
             self.run_process(target=loop_running_small_stuff, args=(q,))
             self.window.title("Running Small Script")
+            self.window.configure(bg='green')
             self.button2.config(text="STOP")
             self.pressed = True
             self.button1.config(state=DISABLED)
             self.button3.config(state=DISABLED)
             self.button4.config(state=DISABLED)
+            self.button5.config(state=DISABLED)
         else:
             self.button2.config(text="small")
             self.kill_all_process()
@@ -86,7 +95,9 @@ class GuiApp(object):
             self.button1.config(state=NORMAL)
             self.button3.config(state=NORMAL)
             self.button4.config(state=NORMAL)
+            self.button5.config(state=NORMAL)
             self.window.title("Wait!!")
+            self.window.configure(bg='red')
 
     def run_warp_script(self):
         if not self.pressed:
@@ -96,10 +107,12 @@ class GuiApp(object):
             self.run_process(target=loop_stucked, args=(q,))
             self.button3.config(text="STOP")
             self.window.title("Running Warp Script")
+            self.window.configure(bg='green')
             self.pressed = True
             self.button1.config(state=DISABLED)
             self.button2.config(state=DISABLED)
             self.button4.config(state=DISABLED)
+            self.button5.config(state=DISABLED)
         else:
             self.button3.config(text="warp")
             self.kill_all_process()
@@ -107,7 +120,9 @@ class GuiApp(object):
             self.button1.config(state=NORMAL)
             self.button2.config(state=NORMAL)
             self.button4.config(state=NORMAL)
+            self.button5.config(state=NORMAL)
             self.window.title("Wait!!")
+            self.window.configure(bg='red')
 
     def run_carrier(self):
         if not self.pressed:
@@ -118,11 +133,13 @@ class GuiApp(object):
             from bigger_more import protect_carrier
             self.run_process(target=protect_carrier, args=(q,))
             self.window.title("Running Carrier")
+            self.window.configure(bg='green')
             self.button4.config(text="STOP")
             self.pressed = True
             self.button1.config(state=DISABLED)
             self.button2.config(state=DISABLED)
             self.button3.config(state=DISABLED)
+            self.button5.config(state=DISABLED)
         else:
             self.button4.config(text="carrier")
             self.kill_all_process()
@@ -130,7 +147,34 @@ class GuiApp(object):
             self.button1.config(state=NORMAL)
             self.button2.config(state=NORMAL)
             self.button3.config(state=NORMAL)
+            self.button5.config(state=NORMAL)
             self.window.title("Wait!!")
+            self.window.configure(bg='red')
+
+    def run_warp_cloak(self):
+        if not self.pressed:
+            from warp_zero_cloak import loop_running_warp_cloak
+            self.run_process(target=loop_running_warp_cloak, args=(q,))
+            from warp_zero import loop_stucked
+            self.run_process(target=loop_stucked, args=(q,))
+            self.window.title("Running Jump cloak")
+            self.window.configure(bg='green')
+            self.button5.config(text="STOP")
+            self.pressed = True
+            self.button1.config(state=DISABLED)
+            self.button2.config(state=DISABLED)
+            self.button3.config(state=DISABLED)
+            self.button4.config(state=DISABLED)
+        else:
+            self.button5.config(text="warp cloak")
+            self.kill_all_process()
+            self.pressed = False
+            self.button1.config(state=NORMAL)
+            self.button2.config(state=NORMAL)
+            self.button3.config(state=NORMAL)
+            self.button4.config(state=NORMAL)
+            self.window.title("Wait!!")
+            self.window.configure(bg='red')
 
 
 def print_message(message, q):
