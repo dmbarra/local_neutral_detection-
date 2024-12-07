@@ -33,10 +33,10 @@ def list_targets():
         return list(pyautogui.locateAllOnScreen(FRIGATE_PATH, confidence=CONFIDENCE))
     if pyautogui.locateOnScreen(CRUISER_PATH, confidence=CONFIDENCE) is not None:
         return list(pyautogui.locateAllOnScreen(CRUISER_PATH, confidence=CONFIDENCE))
-    if pyautogui.locateOnScreen(BATTLECRUISER_PATH, confidence=CONFIDENCE) is not None:
-        return list(pyautogui.locateAllOnScreen(BATTLECRUISER_PATH, confidence=CONFIDENCE))
-    if pyautogui.locateOnScreen(BATTLESHIP_PATH, confidence=CONFIDENCE) is not None:
-        return list(pyautogui.locateAllOnScreen(BATTLESHIP_PATH, confidence=CONFIDENCE))
+    # if pyautogui.locateOnScreen(BATTLECRUISER_PATH, confidence=CONFIDENCE) is not None:
+    #     return list(pyautogui.locateAllOnScreen(BATTLECRUISER_PATH, confidence=CONFIDENCE))
+    # if pyautogui.locateOnScreen(BATTLESHIP_PATH, confidence=CONFIDENCE) is not None:
+    #     return list(pyautogui.locateAllOnScreen(BATTLESHIP_PATH, confidence=CONFIDENCE))
     return []
 
 
@@ -49,14 +49,14 @@ def list_selected_targets():
             or pyautogui.locateOnScreen(LOCKED2_CRUISER_PATH, confidence=CONFIDENCE, grayscale=True) is not None:
         return list(pyautogui.locateAllOnScreen(LOCKED_CRUISER_PATH, confidence=CONFIDENCE, grayscale=True)) \
             + list(pyautogui.locateAllOnScreen(LOCKED2_CRUISER_PATH, confidence=CONFIDENCE, grayscale=True))
-    if pyautogui.locateOnScreen(LOCKED_BATTLECRUISER_PATH, confidence=CONFIDENCE, grayscale=True) is not None \
-            or pyautogui.locateOnScreen(LOCKED2_BATTLECRUISER_PATH, confidence=CONFIDENCE, grayscale=True) is not None:
-        return list(pyautogui.locateAllOnScreen(LOCKED_BATTLECRUISER_PATH, confidence=CONFIDENCE, grayscale=True)) \
-            + list(pyautogui.locateAllOnScreen(LOCKED2_BATTLECRUISER_PATH, confidence=CONFIDENCE, grayscale=True))
-    if pyautogui.locateOnScreen(LOCKED_BATTLESHIP_PATH, confidence=CONFIDENCE, grayscale=True) is not None \
-            or pyautogui.locateOnScreen(LOCKED2_BATTLESHIP_PATH, confidence=CONFIDENCE, grayscale=True) is not None:
-        return list(pyautogui.locateAllOnScreen(LOCKED_BATTLESHIP_PATH, confidence=CONFIDENCE, grayscale=True)) \
-            + list(pyautogui.locateAllOnScreen(LOCKED2_BATTLESHIP_PATH, confidence=CONFIDENCE, grayscale=True))
+    # if pyautogui.locateOnScreen(LOCKED_BATTLECRUISER_PATH, confidence=CONFIDENCE, grayscale=True) is not None \
+    #         or pyautogui.locateOnScreen(LOCKED2_BATTLECRUISER_PATH, confidence=CONFIDENCE, grayscale=True) is not None:
+    #     return list(pyautogui.locateAllOnScreen(LOCKED_BATTLECRUISER_PATH, confidence=CONFIDENCE, grayscale=True)) \
+    #         + list(pyautogui.locateAllOnScreen(LOCKED2_BATTLECRUISER_PATH, confidence=CONFIDENCE, grayscale=True))
+    # if pyautogui.locateOnScreen(LOCKED_BATTLESHIP_PATH, confidence=CONFIDENCE, grayscale=True) is not None \
+    #         or pyautogui.locateOnScreen(LOCKED2_BATTLESHIP_PATH, confidence=CONFIDENCE, grayscale=True) is not None:
+    #     return list(pyautogui.locateAllOnScreen(LOCKED_BATTLESHIP_PATH, confidence=CONFIDENCE, grayscale=True)) \
+    #         + list(pyautogui.locateAllOnScreen(LOCKED2_BATTLESHIP_PATH, confidence=CONFIDENCE, grayscale=True))
     return []
 
 

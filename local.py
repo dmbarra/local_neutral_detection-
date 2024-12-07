@@ -9,7 +9,7 @@ from app import print_message
 NEUTRAL_PATH = 'imgs\\neutral.png'
 ORANGE_PATH = 'imgs\\orange.png'
 RED_PATH = 'imgs\\red.png'
-LOCAL_NEXT = 'imgs\\Q-02UL.png'
+LOCAL_NEXT = 'imgs\\5BTK-M.png'
 
 
 def should_i_play_alarm():
@@ -17,7 +17,8 @@ def should_i_play_alarm():
 
 
 def should_i_play_closer_threat():
-    return get_closer_local() is not None
+    # return get_closer_local() is not None
+    return False
 
 
 def get_the_neutral():

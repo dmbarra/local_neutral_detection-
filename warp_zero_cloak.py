@@ -43,7 +43,7 @@ def click_to_align():
     if align_icon is not None:
         align_icon = generate_random_offset(align_icon)
         pyautogui.move(align_icon)
-        pyautogui.click(align_icon, clicks=random.randint(2, 4), interval=random.uniform(0.2, 0.7))
+        pyautogui.click(align_icon, clicks=random.randint(1, 3), interval=random.uniform(0.2, 0.7))
 
 
 def click_to_cloak():
