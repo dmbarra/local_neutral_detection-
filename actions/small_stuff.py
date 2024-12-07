@@ -4,26 +4,25 @@ import pyautogui
 import random
 
 from app import print_message
-from local import should_i_play_closer_threat, start_threat, stop_playing, should_i_play_alarm, start_caos, start_bloop
-from warp_zero import generate_random_offset
+from actions.warp_zero import generate_random_offset
 
-FRIGATE_PATH = 'imgs\\frigate.png'
-CRUISER_PATH = 'imgs\\cruiser.png'
-BATTLECRUISER_PATH = 'imgs\\battlecruiser.png'
-BATTLESHIP_PATH = 'imgs\\battleship.png'
+FRIGATE_PATH = 'imgs/frigate.png'
+CRUISER_PATH = 'imgs/cruiser.png'
+BATTLECRUISER_PATH = 'imgs/battlecruiser.png'
+BATTLESHIP_PATH = 'imgs/battleship.png'
 
-LOCK_ICON = 'imgs\\enable_lock.png'
-UNLOCK_ICON = 'imgs\\enable_unlock.png'
-NONE_LOCKED = 'imgs\\no_object_select.png'
+LOCK_ICON = 'imgs/enable_lock.png'
+UNLOCK_ICON = 'imgs/enable_unlock.png'
+NONE_LOCKED = 'imgs/no_object_select.png'
 
-LOCKED_CRUISER_PATH = 'imgs\\cruiser_locked.png'
-LOCKED_FRIGATE_PATH = 'imgs\\frigate_locked.png'
-LOCKED_BATTLECRUISER_PATH = 'imgs\\battlecruiser_locked.png'
-LOCKED_BATTLESHIP_PATH = 'imgs\\battleship_locked.png'
-LOCKED2_CRUISER_PATH = 'imgs\\cruiser_locked2.png'
-LOCKED2_FRIGATE_PATH = 'imgs\\frigate_locked2.png'
-LOCKED2_BATTLECRUISER_PATH = 'imgs\\battlecruiser_locked2.png'
-LOCKED2_BATTLESHIP_PATH = 'imgs\\battleship_locked2.png'
+LOCKED_CRUISER_PATH = 'imgs/cruiser_locked.png'
+LOCKED_FRIGATE_PATH = 'imgs/frigate_locked.png'
+LOCKED_BATTLECRUISER_PATH = 'imgs/battlecruiser_locked.png'
+LOCKED_BATTLESHIP_PATH = 'imgs/battleship_locked.png'
+LOCKED2_CRUISER_PATH = 'imgs/cruiser_locked2.png'
+LOCKED2_FRIGATE_PATH = 'imgs/frigate_locked2.png'
+LOCKED2_BATTLECRUISER_PATH = 'imgs/battlecruiser_locked2.png'
+LOCKED2_BATTLESHIP_PATH = 'imgs/battleship_locked2.png'
 
 CONFIDENCE = 0.8
 
@@ -113,7 +112,7 @@ def loop_running_small_stuff(q=None):
 
 
 if __name__ == '__main__':
-    from local import loop_running_local
+    from actions.local import loop_running_local
     process = multiprocessing.Process(target=loop_running_local)
     process.start()
     loop_running_small_stuff()

@@ -4,21 +4,21 @@ import pyautogui
 import random
 
 from app import print_message
-from local import get_the_neutral, get_the_orange, get_the_red
-from small_stuff import get_unlock_icon, list_selected_targets, list_targets, select_to_shoot
-from warp_zero import generate_random_offset, get_stopped_icon, get_msg_warp
+from actions.local import get_the_neutral, get_the_orange, get_the_red
+from actions.small_stuff import get_unlock_icon, list_selected_targets, list_targets, select_to_shoot
+from actions.warp_zero import generate_random_offset, get_stopped_icon, get_msg_warp
 
-KEEPSTAR_PATH = 'imgs\\kepstar.png'
-ENABLED_ALIGN_PATH = 'imgs\\enable_align.png'
-ENABLED_WARP_PATH = 'imgs\\enable_warp.png'
+KEEPSTAR_PATH = 'imgs/kepstar.png'
+ENABLED_ALIGN_PATH = 'imgs/enable_align.png'
+ENABLED_WARP_PATH = 'imgs/enable_warp.png'
 
-LOAD_ALL_FIGHTERS = 'imgs\\load_all_fighters.png'
-RECOVERY_ALL_FIGHTERS = 'imgs\\recovery_all_fighters.png'
+LOAD_ALL_FIGHTERS = '..imgs/load_all_fighters.png'
+RECOVERY_ALL_FIGHTERS = 'imgs/recovery_all_fighters.png'
 
-FIGHTERS_WITH_LASER = 'imgs\\laser_fighters.png'
+FIGHTERS_WITH_LASER = 'imgs/laser_fighters.png'
 
-MSG_ALIGNING_PATH = 'imgs\\aligning.png'
-MSG_LOCK_PATH = 'imgs\\lock.png'
+MSG_ALIGNING_PATH = 'imgs/aligning.png'
+MSG_LOCK_PATH = 'imgs/lock.png'
 
 
 def get_msg_lock():

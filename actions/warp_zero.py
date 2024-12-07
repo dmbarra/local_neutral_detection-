@@ -5,20 +5,20 @@ import random
 
 from app import print_message
 
-GATE_TO_JUMP_PATH = 'imgs\\destination.png'
-STATION_TO_DOCK_PATH = 'imgs\\station.png'
-STATION_TO_DOCK_HOME_PATH = 'imgs\\station_home.png'
-WARPING_ICON_PATH = 'imgs\\warping_icon.png'
-STOPPED_ICON_PATH = 'imgs\\stopped_icon.png'
-ENABLED_ALIGN_PATH = 'imgs\\enable_align2.png'
-ENABLED_JUMP_PATH = 'imgs\\enable_jump.png'
-ENABLED_DOCK_PATH = 'imgs\\enable_station.png'
+GATE_TO_JUMP_PATH = 'imgs/destination.png'
+STATION_TO_DOCK_PATH = 'imgs/station.png'
+STATION_TO_DOCK_HOME_PATH = 'imgs/station_home.png'
+WARPING_ICON_PATH = 'imgs/warping_icon.png'
+STOPPED_ICON_PATH = 'imgs/stopped_icon.png'
+ENABLED_ALIGN_PATH = 'imgs/enable_align2.png'
+ENABLED_JUMP_PATH = 'imgs/enable_jump.png'
+ENABLED_DOCK_PATH = 'imgs/enable_station.png'
 
-MSG_ALIGN_PATH = 'imgs\\aligning.png'
-MSG_JUMP_PATH = 'imgs\\jumping.png'
-MSG_WARP_PATH = 'imgs\\warp.png'
+MSG_ALIGN_PATH = 'imgs/aligning.png'
+MSG_JUMP_PATH = 'imgs/jumping.png'
+MSG_WARP_PATH = 'imgs/warp.png'
 
-NO_OBJECT_SELECTED = 'imgs\\no_object_select.png'
+NO_OBJECT_SELECTED = 'imgs/no_object_select.png'
 
 
 def click_to_jump():

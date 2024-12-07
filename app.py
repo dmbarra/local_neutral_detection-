@@ -53,7 +53,7 @@ class GuiApp(object):
 
     def run_local_script(self):
         if not self.pressed:
-            from local import loop_running_local
+            from actions.local import loop_running_local
             self.run_process(target=loop_running_local, args=(q,))
             self.window.title("Running Local Script")
             self.window.configure(bg='green')
@@ -76,9 +76,9 @@ class GuiApp(object):
 
     def run_small_script(self):
         if not self.pressed:
-            from local import loop_running_local
+            from actions.local import loop_running_local
             self.run_process(target=loop_running_local, args=(q,))
-            from small_stuff import loop_running_small_stuff
+            from actions.small_stuff import loop_running_small_stuff
             self.run_process(target=loop_running_small_stuff, args=(q,))
             self.window.title("Running Small Script")
             self.window.configure(bg='green')
@@ -101,9 +101,9 @@ class GuiApp(object):
 
     def run_warp_script(self):
         if not self.pressed:
-            from warp_zero import loop_running_warp
+            from actions.warp_zero import loop_running_warp
             self.run_process(target=loop_running_warp, args=(q,))
-            from warp_zero import loop_stucked
+            from actions.warp_zero import loop_stucked
             self.run_process(target=loop_stucked, args=(q,))
             self.button3.config(text="STOP")
             self.window.title("Running Warp Script")
@@ -126,11 +126,11 @@ class GuiApp(object):
 
     def run_carrier(self):
         if not self.pressed:
-            from local import loop_running_local
+            from actions.local import loop_running_local
             self.run_process(target=loop_running_local, args=(q,))
-            from bigger_more import loop_running_by_carrier
+            from actions.bigger_more import loop_running_by_carrier
             self.run_process(target=loop_running_by_carrier, args=(q,))
-            from bigger_more import protect_carrier
+            from actions.bigger_more import protect_carrier
             self.run_process(target=protect_carrier, args=(q,))
             self.window.title("Running Carrier")
             self.window.configure(bg='green')
@@ -153,9 +153,9 @@ class GuiApp(object):
 
     def run_warp_cloak(self):
         if not self.pressed:
-            from warp_zero_cloak import loop_running_warp_cloak
+            from actions.warp_zero_cloak import loop_running_warp_cloak
             self.run_process(target=loop_running_warp_cloak, args=(q,))
-            from warp_zero import loop_stucked
+            from actions.warp_zero import loop_stucked
             self.run_process(target=loop_stucked, args=(q,))
             self.window.title("Running Jump cloak")
             self.window.configure(bg='green')

@@ -6,10 +6,10 @@ import multiprocessing
 
 from app import print_message
 
-NEUTRAL_PATH = 'imgs\\neutral.png'
-ORANGE_PATH = 'imgs\\orange.png'
-RED_PATH = 'imgs\\red.png'
-LOCAL_NEXT = 'imgs\\5BTK-M.png'
+NEUTRAL_PATH = 'imgs/neutral.png'
+ORANGE_PATH = 'imgs/orange.png'
+RED_PATH = 'imgs/red.png'
+LOCAL_NEXT = 'imgs/5BTK-M.png'
 
 
 def should_i_play_alarm():
@@ -38,21 +38,21 @@ def get_closer_local():
 
 
 def play_alarm():
-    audio_file = os.path.dirname(__file__) + '\\sound\\alarm1.mp3'
+    audio_file = os.path.dirname(__file__) + '\\..\\sound\\alarm1.mp3'
     p = multiprocessing.Process(target=playsound, args=(audio_file,))
     p.start()
     return p
 
 
 def play_threat():
-    audio_file = os.path.dirname(__file__) + '\\sound\\next_system.mp3'
+    audio_file = os.path.dirname(__file__) + '\\..\\sound\\next_system.mp3'
     p = multiprocessing.Process(target=playsound, args=(audio_file,))
     p.start()
     return p
 
 
 def play_bloop():
-    audio_file = os.path.dirname(__file__) + '\\sound\\bloop.mp3'
+    audio_file = os.path.dirname(__file__) + '\\..\\sound\\bloop.mp3'
     p = multiprocessing.Process(target=playsound, args=(audio_file,))
     p.start()
     return p
