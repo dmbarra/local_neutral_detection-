@@ -2,17 +2,19 @@ import multiprocessing
 from queue import Empty
 from tkinter import Tk, Button, Frame, LEFT, Text, BOTH, TOP, BOTTOM, DISABLED, NORMAL
 
+from actions.screen_manager import ScreenAreaSelector
+
 
 class GuiApp(object):
     def __init__(self, q):
         self.multiprocess = None
         self.pressed = False
         self.window = Tk()
-        self.window.geometry("250x200")
+        self.window.geometry("350x200")
         self.window.title("Waiting!!")
         self.window.configure(bg='red')
 
-        self.button_frame = Frame(self.window, width=250, height=160)
+        self.button_frame = Frame(self.window, width=350, height=160)
         self.button_frame.pack(side=BOTTOM, pady=2)
         self.button1 = Button(self.button_frame, text="Local", command=self.run_local_script)
         self.button1.pack(side=LEFT, padx=2)
@@ -24,6 +26,8 @@ class GuiApp(object):
         self.button4.pack(side=LEFT, padx=2)
         self.button5 = Button(self.button_frame, text="warp cloak", command=self.run_warp_cloak)
         self.button5.pack(side=LEFT, padx=2)
+        self.button6 = Button(self.button_frame, text="2 ships", command=self.loop_running_two_acc_small_stuff)
+        self.button6.pack(side=LEFT, padx=2)
 
         self.text_frame = Frame(self.window, width=250, height=160)
         self.text_frame.pack(side=TOP, pady=2)
@@ -63,6 +67,7 @@ class GuiApp(object):
             self.button3.config(state=DISABLED)
             self.button4.config(state=DISABLED)
             self.button5.config(state=DISABLED)
+            self.button6.config(state=DISABLED)
         else:
             self.button1.config(text="Local")
             self.kill_all_process()
@@ -71,6 +76,7 @@ class GuiApp(object):
             self.button3.config(state=NORMAL)
             self.button4.config(state=NORMAL)
             self.button5.config(state=NORMAL)
+            self.button6.config(state=NORMAL)
             self.window.title("Wait!!")
             self.window.configure(bg='red')
 
@@ -88,6 +94,7 @@ class GuiApp(object):
             self.button3.config(state=DISABLED)
             self.button4.config(state=DISABLED)
             self.button5.config(state=DISABLED)
+            self.button6.config(state=DISABLED)
         else:
             self.button2.config(text="small")
             self.kill_all_process()
@@ -96,6 +103,7 @@ class GuiApp(object):
             self.button3.config(state=NORMAL)
             self.button4.config(state=NORMAL)
             self.button5.config(state=NORMAL)
+            self.button6.config(state=NORMAL)
             self.window.title("Wait!!")
             self.window.configure(bg='red')
 
@@ -113,6 +121,7 @@ class GuiApp(object):
             self.button2.config(state=DISABLED)
             self.button4.config(state=DISABLED)
             self.button5.config(state=DISABLED)
+            self.button6.config(state=DISABLED)
         else:
             self.button3.config(text="warp")
             self.kill_all_process()
@@ -121,6 +130,7 @@ class GuiApp(object):
             self.button2.config(state=NORMAL)
             self.button4.config(state=NORMAL)
             self.button5.config(state=NORMAL)
+            self.button6.config(state=NORMAL)
             self.window.title("Wait!!")
             self.window.configure(bg='red')
 
@@ -140,6 +150,7 @@ class GuiApp(object):
             self.button2.config(state=DISABLED)
             self.button3.config(state=DISABLED)
             self.button5.config(state=DISABLED)
+            self.button6.config(state=DISABLED)
         else:
             self.button4.config(text="carrier")
             self.kill_all_process()
@@ -148,6 +159,7 @@ class GuiApp(object):
             self.button2.config(state=NORMAL)
             self.button3.config(state=NORMAL)
             self.button5.config(state=NORMAL)
+            self.button6.config(state=NORMAL)
             self.window.title("Wait!!")
             self.window.configure(bg='red')
 
@@ -165,6 +177,7 @@ class GuiApp(object):
             self.button2.config(state=DISABLED)
             self.button3.config(state=DISABLED)
             self.button4.config(state=DISABLED)
+            self.button6.config(state=DISABLED)
         else:
             self.button5.config(text="warp cloak")
             self.kill_all_process()
@@ -173,6 +186,42 @@ class GuiApp(object):
             self.button2.config(state=NORMAL)
             self.button3.config(state=NORMAL)
             self.button4.config(state=NORMAL)
+            self.button6.config(state=NORMAL)
+            self.window.title("Wait!!")
+            self.window.configure(bg='red')
+
+    def loop_running_two_acc_small_stuff(self):
+        if not self.pressed:
+            from actions.local import loop_running_local
+            self.run_process(target=loop_running_local, args=(q,))
+
+            def on_areas_selected(selected_areas):
+                print(f"Selected areas: {selected_areas}")
+                from actions.small_stuff_two_acc import loop_running_two_acc_small_stuff
+                self.run_process(target=loop_running_two_acc_small_stuff, args=(q, selected_areas))
+
+            # Launch ScreenAreaSelector
+            selector = ScreenAreaSelector(self.window, area_limit=2)
+            selector.run(on_areas_selected)
+
+            self.window.title("Running two accs")
+            self.window.configure(bg='green')
+            self.button6.config(text="STOP")
+            self.pressed = True
+            self.button1.config(state=DISABLED)
+            self.button2.config(state=DISABLED)
+            self.button3.config(state=DISABLED)
+            self.button4.config(state=DISABLED)
+            self.button5.config(state=DISABLED)
+        else:
+            self.button6.config(text="2 ships")
+            self.kill_all_process()
+            self.pressed = False
+            self.button1.config(state=NORMAL)
+            self.button2.config(state=NORMAL)
+            self.button3.config(state=NORMAL)
+            self.button4.config(state=NORMAL)
+            self.button5.config(state=NORMAL)
             self.window.title("Wait!!")
             self.window.configure(bg='red')
 
